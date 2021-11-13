@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.app_nativa.databinding.FragmentItemListBinding;
 import com.example.app_nativa.databinding.ItemListContentBinding;
 
 import com.example.app_nativa.placeholder.PlaceholderContent;
 
+import org.json.JSONObject;
+
+import java.text.BreakIterator;
 import java.util.List;
 
 /**
