@@ -89,9 +89,9 @@ public class ItemDetailFragment extends Fragment {
 
     private void updateContent() {
         if (mItem != null) {
-            mTextView.setText(mItem.details);
+            mTextView.setText(mItem.title);
             if (mToolbarLayout != null) {
-                mToolbarLayout.setTitle(mItem.content);
+                mToolbarLayout.setTitle(mItem.description);
             }
         }
     }

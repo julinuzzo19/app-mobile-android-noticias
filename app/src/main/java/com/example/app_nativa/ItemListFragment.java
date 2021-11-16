@@ -169,8 +169,8 @@ public class ItemListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mIdView.setText(mValues.get(position).title);
+            holder.mContentView.setText(mValues.get(position).description);
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
@@ -182,7 +182,7 @@ public class ItemListFragment extends Fragment {
                 // identify the id of the content
                 ClipData.Item clipItem = new ClipData.Item(mValues.get(position).id);
                 ClipData dragData = new ClipData(
-                        ((PlaceholderContent.PlaceholderItem) v.getTag()).content,
+                        ((PlaceholderContent.PlaceholderItem) v.getTag()).description,
                         new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN},
                         clipItem
                 );
