@@ -44,8 +44,6 @@ public class PlaceholderContent {
      */
     public static class PlaceholderItem {
         public final String id;
-        //public final String content;
-        //public final String details;
         public final String title;
         public final String author;
         public final String description;
@@ -104,11 +102,11 @@ public class PlaceholderContent {
             objetoJson2.put("description", "EE.UU. dominó entre los hombres y Australia entre las mujeres");
             objetoJson2.put("image", "https://images.pagina12.com.ar/styles/width960/public/2021-08/182414-000-9hd8y4.jpg?itok=jbcngzNx");
             objetoJson2.put("country", "ar");
-            objetoJson1.put("category", "general");
-            objetoJson1.put("language", "es");
-            objetoJson1.put("published_at", "2021-09-01T01:16:09+00:00");
-            objetoJson1.put("source", "cronica");
-            objetoJson1.put("url", "https://www.losandes.com.ar/politica/alberto-fernandez-propuso-discutir-la-duracion-de-los-jueces-en-sus-cargos");
+            objetoJson2.put("category", "general");
+            objetoJson2.put("language", "es");
+            objetoJson2.put("published_at", "2021-09-01T01:16:09+00:00");
+            objetoJson2.put("source", "cronica");
+            objetoJson2.put("url", "https://www.losandes.com.ar/politica/alberto-fernandez-propuso-discutir-la-duracion-de-los-jueces-en-sus-cargos");
 
             //guardo en arreglo los elementos
             arrayJson.put(objetoJson1);
