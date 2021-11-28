@@ -2,7 +2,9 @@ package com.example.app_nativa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+        isLogged();
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         repassword = (EditText) findViewById(R.id.repassword);
@@ -42,7 +45,8 @@ public class FirstActivity extends AppCompatActivity {
                             Boolean insert = DB.insertData(emailAdress, pass);
                             if(insert==true){
                                 Toast.makeText(FirstActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),ItemDetailHostActivity.class);
+                                savePrefs(emailAdress,pass);
+                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                 startActivity(intent);
                             }else{
                                 Toast.makeText(FirstActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
@@ -64,5 +68,24 @@ public class FirstActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    private void isLogged()
+    {
+        SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String email = prefs.getString("email", null);
+        String password = prefs.getString("password", null);
+
+        if (email != null && password != null){
+            Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
+    public void savePrefs(String email,String password) {
+        SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.apply();
     }
 }
