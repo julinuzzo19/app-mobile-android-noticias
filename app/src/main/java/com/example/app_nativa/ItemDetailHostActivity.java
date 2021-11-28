@@ -29,6 +29,7 @@ public class ItemDetailHostActivity extends AppCompatActivity {
     private RequestQueue queue;
     Context context;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +51,7 @@ public class ItemDetailHostActivity extends AppCompatActivity {
         //queue = Volley.newRequestQueue(this);
           //  getNews();
 
-
-
     }
-
-
 
 
     @Override

@@ -23,4 +23,5 @@
             android:defaultValue=""
             app:argType="string" />
     </fragment>
+
 </navigation>

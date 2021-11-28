@@ -1,94 +1,45 @@
-package com.example.app_nativa.placeholder;
+package com.example.app_nativa;
 
-import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import com.example.app_nativa.placeholder.PlaceholderContent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+
+public class MasterDetailActivity extends BaseActivity {
+
+    private RecyclerView mRecyclerView;
+    private AdapterMasterDetail mAdapter;
+    ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias;
 
 
-public class PlaceholderContent {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_master_detail);
 
-    /**
-     * An array of sample (placeholder) items.
-     */
-    public static final List<PlaceholderItem> ITEMS = new ArrayList<PlaceholderItem>();
-    public static Map<String, PlaceholderItem> ITEM_MAP =
-            new HashMap<String, PlaceholderItem>();
+        listaNoticias = new ArrayList<>();
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        getPersonajes(); //llenar array con personajes
 
-    static {
-        getNews();
-    }
-
-    private static void addItem(PlaceholderItem item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
-
+        mAdapter = new AdapterMasterDetail(listaNoticias);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 
-
-    public static class PlaceholderItem {
-        public final String id;
-        public final String title;
-        public final String author;
-        public final String description;
-        public final String image;
-        public final String country;
-        public final String url;
-        public final String language;
-        public final String source;
-        public final String category;
-        public final String published_at;
-
-
-        public PlaceholderItem(String title,String author,String description,String image,String country,String url, String language, String source,String category,String published_at) {
-            this.id = UUID.randomUUID().toString();
-            this.title = title;
-            this.author = author;
-            this.description =description ;
-            this.image = image;
-            this.country = country;
-            this.url =url ;
-            this.language = language;
-            this.source= source;
-            this.category= category;
-            this.published_at=published_at;
-
-        }
-
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public String toString() {
-            return description;
-        }
-    }
-
-    public static void getNews() {
-
+    public void getPersonajes()
+    {
         JSONArray arrayJson= new JSONArray();
 
         try {
@@ -134,13 +85,28 @@ public class PlaceholderContent {
                 String source = mJsonObject.getString("source");
                 String url = mJsonObject.getString("url");
 
-                PlaceholderItem item = new PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
+                PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
 
-                addItem(item);
+                listaNoticias.add(item);
             }
         }catch (JSONException e) {
             e.printStackTrace();
         }
 
+
+    }
+
+
+
+
+
+    @Override
+    int getContentViewId() {
+        return R.layout.activity_master_detail;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.MasterDetailActivity;
     }
 }

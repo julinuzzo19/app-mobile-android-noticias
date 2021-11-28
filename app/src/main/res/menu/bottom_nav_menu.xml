@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Explorar"
-        android:id="@+id/item_list_fragment"
+        android:id="@+id/MasterDetailActivity"
         android:icon="@drawable/ic_public"/>
     <item android:title="Locales"
-        android:id="@+id/localNewsFragment"
+        android:id="@+id/LocalNewsActivity"
         android:icon="@drawable/ic_local"/>
     <item android:title="Favoritas"
-        android:id="@+id/favouritesFragment"
+        android:id="@+id/favouritesActivity"
         android:icon="@drawable/ic_favourites"/>
 </menu>
