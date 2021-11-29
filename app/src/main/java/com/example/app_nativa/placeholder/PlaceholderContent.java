@@ -81,6 +81,10 @@ public class PlaceholderContent {
             return id;
         }
 
+        public String getUrl() {
+            return url;
+        }
+
         @Override
         public String toString() {
             return description;

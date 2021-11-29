@@ -5,7 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.example.app_nativa.placeholder.PlaceholderContent;
 
@@ -25,7 +30,7 @@ public class MasterDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_master_detail);
+        //setContentView(R.layout.activity_master_detail);
 
         listaNoticias = new ArrayList<>();
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -34,6 +39,16 @@ public class MasterDetailActivity extends BaseActivity {
         getPersonajes(); //llenar array con personajes
 
         mAdapter = new AdapterMasterDetail(listaNoticias);
+
+        mAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), DetailActivity.class);
+                i.putExtra("url",listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+                startActivity(i);
+            }
+        });
+
         mRecyclerView.setAdapter(mAdapter);
     }
 

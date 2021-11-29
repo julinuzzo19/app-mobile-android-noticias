@@ -12,14 +12,17 @@ import com.example.app_nativa.placeholder.PlaceholderContent;
 
 import java.util.ArrayList;
 
-public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetail.ViewHolder> {
+public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetail.ViewHolder>
+ implements View.OnClickListener{
 
     ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias;
+    private View.OnClickListener listener;
 
     // Este es nuestro constructor (puede variar según lo que queremos mostrar)
     public AdapterMasterDetail(ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias) {
         this.listaNoticias = listaNoticias;
     }
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,6 +50,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_list_noticias, viewGroup, false);
 
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -64,5 +68,17 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
     @Override
     public int getItemCount() {
         return listaNoticias.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (listener!= null){
+            listener.onClick(v);
+        }
+    }
+
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener=listener;
     }
 }
