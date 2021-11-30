@@ -3,6 +3,7 @@ package com.example.app_nativa;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -74,13 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     abstract int getNavigationMenuItemId();
 
-/*
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        getMenuInflater().inflate(R.menu.context_menu,menu);
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
-*/
+
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         super.onContextItemSelected(item);
@@ -98,5 +93,29 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         return false;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
+                Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.settings:
+                Intent intent= new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
+                return true;
+
+        }
+
+
+
+        return false;
+    }
 }
