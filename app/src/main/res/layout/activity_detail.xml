@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/webview"
-        tools:context="com.example.app_nativa.ItemDetailFragment"/>
+        tools:context="com.example.app_nativa.DetailActivity"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

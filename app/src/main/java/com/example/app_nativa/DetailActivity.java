@@ -21,7 +21,7 @@ public class DetailActivity extends AppCompatActivity {
             String value = extras.getString("url");
             //The key argument here must match that used in the other activity
 
-            webView=((WebView) webView.findViewById(R.id.webview));
+            webView=findViewById(R.id.webview);
             webView.setWebViewClient(new WebViewClient());
             webView.loadUrl(value);
         }
