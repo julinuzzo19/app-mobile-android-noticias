@@ -27,6 +27,8 @@ public class LocalNewsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_local_news);
+
+        setTitle("Locales");
     }
 
 

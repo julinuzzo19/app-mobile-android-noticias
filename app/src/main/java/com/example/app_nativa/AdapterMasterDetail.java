@@ -1,5 +1,6 @@
 package com.example.app_nativa;
 
+import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_nativa.placeholder.PlaceholderContent;
 
 import java.util.ArrayList;
 
 public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetail.ViewHolder>
  implements View.OnClickListener{
+
+    Context context;
 
     ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias;
     private View.OnClickListener listener;
@@ -38,7 +42,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
             title = (TextView) view.findViewById(R.id.title);
             description = (TextView) view.findViewById(R.id.description);
             image = (ImageView) view.findViewById(R.id.image);
-            card= view.findViewById(R.id.item_recycler);
+            card = view.findViewById(R.id.item_recycler);
             card.setOnCreateContextMenuListener(this);
 
         }
@@ -72,8 +76,13 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         viewHolder.title.setText(listaNoticias.get(position).getTitle());
         viewHolder.description.setText(listaNoticias.get(position).getDescription());
         //viewHolder.image.setImage(listaNoticias.get(position).getImage());
+        Glide.with(context).load(listaNoticias.get(position).getImage()).into(viewHolder.image);
     }
-
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        context = recyclerView.getContext();
+    }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
