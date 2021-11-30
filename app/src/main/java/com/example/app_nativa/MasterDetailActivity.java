@@ -9,9 +9,13 @@ import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -62,7 +66,7 @@ public class MasterDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), DetailActivity.class);
-                i.putExtra("url",listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+                i.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
                 startActivity(i);
             }
         });
@@ -71,6 +75,36 @@ public class MasterDetailActivity extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter);
 
     }
+
+/*Mostrar menu contextual
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.share:
+                showToast(info.id);
+                return true;
+            case R.id.Favourite:
+                showToast(info.id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    public void showToast(Long info)
+    {
+        Toast.makeText(getApplicationContext(), "Info: "+info, Toast.LENGTH_SHORT).show();
+
+    }
+*/
+
 
     public void getNoticias() throws JSONException {
         /*
