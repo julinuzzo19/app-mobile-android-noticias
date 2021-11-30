@@ -43,9 +43,9 @@ public class MasterDetailActivity extends BaseActivity {
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), DetailActivity.class);
-                i.putExtra("url",listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
-                startActivity(i);
+                //Intent i = new Intent(getApplicationContext(), DetailActivity.class);
+                //i.putExtra("url",listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+                //startActivity(i);
             }
         });
 
