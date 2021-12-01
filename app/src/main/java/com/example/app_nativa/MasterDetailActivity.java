@@ -1,28 +1,16 @@
 package com.example.app_nativa;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.AdapterView;
+
+import android.view.View;;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -45,102 +33,86 @@ public class MasterDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Explorar");
+
+        listaNoticias = new ArrayList<>();
+        requestQueue=Volley.newRequestQueue(this);
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        setTitle("Explorar");
-        //requestQueue = VolleySingleton.getmInstance(this).getRequestQueue();
 
-
-        listaNoticias = new ArrayList<>();
         try {
-            getNoticias(); //llenar array con noticias
+            getNoticias();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        mAdapter = new AdapterMasterDetail(listaNoticias);
-
-        mAdapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), DetailActivity.class);
-                i.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
-                startActivity(i);
-            }
-        });
 
 
-        mRecyclerView.setAdapter(mAdapter);
 
     }
 
 
     public void getNoticias() throws JSONException {
-        /*
-        //String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca&languages=es&countries=ar";
-        String url_api = "https://node-mysql3.herokuapp.com/api/projects";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url_api, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
+/*
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca&languages=es&countries=ar";
+        //String url_api = "https://node-mysql3.herokuapp.com/api/projects";
 
-                for (int i = 0; i < response.length(); i++)
-                {
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest (Request.Method.GET, url_api,null,
+                response -> {
                     try {
-                        JSONObject jsonObject = response.getJSONObject(i);
+                        JSONArray mJsonArray = response.getJSONArray("data");
 
-                        String title = jsonObject.getString("title");
-                        String description = jsonObject.getString("description");
-                        String image = jsonObject.getString("image");
-                        String url = jsonObject.getString("url");
-                        String author = jsonObject.getString("author");
-                        String country = jsonObject.getString("country");
-                        String language = jsonObject.getString("language");
-                        String source = jsonObject.getString("source");
-                        String category = jsonObject.getString("category");
-                        String published_at = jsonObject.getString("published_at");
+                    for (int i=0; i<=mJsonArray.length();i++)
+                    {
+                        JSONObject itemJson = mJsonArray.getJSONObject(i);
+                        String image = itemJson.getString("image");
+                        if (image != "null") {
+                            String title = itemJson.getString("title");
+                            String description = itemJson.getString("description");
+                            if (title != description) {
+                                String author = itemJson.getString("author");
+                                String country = itemJson.getString("country");
+                                String category = itemJson.getString("category");
+                                String language = itemJson.getString("language");
+                                String published_at = itemJson.getString("published_at");
+                                String source = itemJson.getString("source");
+                                String url = itemJson.getString("url");
 
-                        PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
-                        listaNoticias.add(item);
+                                PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title, author, description, image, country, url, language, source, category, published_at);
+
+                                listaNoticias.add(item);
+
+                                mAdapter=new AdapterMasterDetail(listaNoticias);
+
+                                mAdapter.setOnClickListener(v -> {
+                                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                                    intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+                                    startActivity(intent);
+                                });
+
+                                mRecyclerView.setAdapter(mAdapter);
+                            }
+                        }
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    //mAdapter = new AdapterMasterDetail(listaNoticias);
-                    //mRecyclerView.setAdapter(mAdapter);
-                }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MasterDetailActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(" de la api paaaa:", "onErrorResponse: "+error.getMessage());
-            }
-        });
-
-        requestQueue.add(jsonArrayRequest);
-        */
-        /*
-//metodo 2
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url_api = "https://node-mysql3.herokuapp.com/api/projects";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_api,
-                response -> {
-                    // Display the first 500 characters of the response string.
-                    //textView.setText("Response is: "+ response.substring(0,500));
-                    Toast.makeText(getApplicationContext(), "Hola", Toast.LENGTH_SHORT).show();
                 }, error -> {
-                    //textView.setText("That didn't work!");
                     Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_SHORT).show();
                 });
 
-        // Add the request to the RequestQueue.
+
         queue.add(stringRequest);
 */
+
+
 
         JSONArray arrayJson= new JSONArray();
 
@@ -202,6 +174,15 @@ public class MasterDetailActivity extends BaseActivity {
             PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
 
             listaNoticias.add(item);
+            mAdapter=new AdapterMasterDetail(listaNoticias);
+
+                                mAdapter.setOnClickListener(v -> {
+                                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                                    intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+                                    startActivity(intent);
+                                });
+
+                                mRecyclerView.setAdapter(mAdapter);
         }
 
 
