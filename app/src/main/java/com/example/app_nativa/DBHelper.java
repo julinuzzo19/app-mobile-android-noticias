@@ -6,6 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.app_nativa.placeholder.PlaceholderContent;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DBNAME = "Login.db";
     public DBHelper(Context context) {
@@ -14,11 +21,13 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create Table users(email TEXT primary key, password TEXT)");
+        db.execSQL("create Table favourites(id TEXT primary key, title TEXT,image TEXT,description TEXT,url TEXT,author TEXT,source TEXT,published_At TEXT,category TEXT,country TEXT, language TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop Table if exists users");
+        db.execSQL("drop Table if exists favourites");
     }
 
     public Boolean insertData(String email, String password){
@@ -48,6 +57,85 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         else
             return false;
+    }
+
+    public Boolean insertFavourite(PlaceholderContent.PlaceholderItem noticia)
+    {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues= new ContentValues();
+        contentValues.put("id", noticia.getId());
+        contentValues.put("title", noticia.getTitle());
+        contentValues.put("image", noticia.getImage());
+        contentValues.put("description", noticia.getDescription());
+        contentValues.put("url", noticia.getUrl());
+        contentValues.put("author", noticia.getAuthor());
+        contentValues.put("source", noticia.getSource());
+        contentValues.put("published_at", noticia.getPublished_at());
+        contentValues.put("category", noticia.getCategory());
+        contentValues.put("country", noticia.getCountry());
+        contentValues.put("language", noticia.getLanguage());
+
+
+        long result = MyDB.insert("favourites", null, contentValues);
+        if(result==-1) return false;
+        else
+            return true;
+    }
+
+    public ArrayList<PlaceholderContent.PlaceholderItem> getFavourites(){
+        ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias=new ArrayList<PlaceholderContent.PlaceholderItem>();
+
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from favourites",null);
+
+
+
+        while(cursor.moveToNext()) {
+            String id = cursor.getString(0);
+            String title = cursor.getString(1);
+            String image = cursor.getString(2);
+            String description = cursor.getString(3);
+            String url = cursor.getString(4);
+            String author = cursor.getString(5);
+            String source = cursor.getString(6);
+            String published_at = cursor.getString(7);
+            String category = cursor.getString(8);
+            String country = cursor.getString(9);
+            String language = cursor.getString(10);
+
+            PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
+            listaNoticias.add(item);
+        }
+
+
+       return listaNoticias;
+
+    }
+
+    public JSONArray cursorToJsonArray(Cursor cursor) {
+
+        JSONArray resultSet = new JSONArray();
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+            for (int i = 0; i < totalColumn; i++) {
+                if (cursor.getColumnName(i) != null) {
+                    try {
+                        rowObject.put(cursor.getColumnName(i),
+                                cursor.getString(i));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return resultSet;
+
     }
 
 

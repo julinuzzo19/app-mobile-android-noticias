@@ -38,21 +38,24 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         navigationView.setOnNavigationItemSelectedListener(this);
 
 
-        //Obtener preferences
 
 
 
     }
-
 
     protected String getLanguagePrefs(){
       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-         String language = prefs.getString("language", "Español");
-        if (language.equals("English")) return "en";
-        else return "es";
+         String language = prefs.getString("language", "es");
+       return language;
     }
     private void setLanguageForApp(String languageToLoad){
         Locale locale;
+
+        SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("language", languageToLoad).apply();
+
         if(languageToLoad.equals("not-set")){ //use any value for default
             locale = Locale.getDefault();
         }

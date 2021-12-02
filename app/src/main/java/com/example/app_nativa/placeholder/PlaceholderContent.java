@@ -85,6 +85,30 @@ public class PlaceholderContent {
             return url;
         }
 
+        public String getPublished_at() {
+            return published_at;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
         @Override
         public String toString() {
             return description;

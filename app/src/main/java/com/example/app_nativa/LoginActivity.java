@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                     Boolean checkuserpass = DB.checkemailpassword(emailAdress, pass);
                     if(checkuserpass==true){
                         Toast.makeText(LoginActivity.this, "Sign in successfull", Toast.LENGTH_SHORT).show();
+                        savePrefs(emailAdress,pass);
                         Intent intent  = new Intent(getApplicationContext(), MasterDetailActivity.class);
                         startActivity(intent);
                     }else{
@@ -48,6 +49,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void savePrefs(String email,String password) {
+        SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.apply();
     }
 
 
