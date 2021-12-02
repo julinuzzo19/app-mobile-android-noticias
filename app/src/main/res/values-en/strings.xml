@@ -1,11 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">App-nativa</string>
-    <string name="title_item_detail">Detalle</string>
-    <string name="title_activity_login">Iniciar sesión</string>
+
+    <string name="app_name">App-native</string>
+    <string name="title_item_detail">Detail</string>
+    <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Iniciar sesión o registrarse</string>
-    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login or Sign up</string>
+    <string name="action_sign_in_short">Log in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
@@ -29,7 +31,7 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
-    <string name="name_title_favourite">Favoritos</string>
-    <string name="name_title_explore">Explorar</string>
-    <string name="name_title_localsnews">Noticias locales</string>
+    <string name="name_title_favourite">Favourites</string>
+    <string name="name_title_explore">Explore</string>
+    <string name="name_title_localsnews">Local news</string>
 </resources>

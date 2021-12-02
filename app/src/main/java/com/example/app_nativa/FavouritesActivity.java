@@ -15,7 +15,7 @@ public class FavouritesActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_favourites);
-        setTitle("Favoritos");
+        setTitle(R.string.name_title_favourite);
     }
 
     @Override

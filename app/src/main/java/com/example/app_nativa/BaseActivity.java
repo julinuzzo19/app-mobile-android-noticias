@@ -1,7 +1,12 @@
 package com.example.app_nativa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,8 +15,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Locale;
 
 public abstract class BaseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -21,13 +29,45 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String lang= getLanguagePrefs();
+        setLanguageForApp(lang);
+
         setContentView(getContentViewId());
 
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
 
-        //registerForContextMenu();
+
+        //Obtener preferences
+
+
+
     }
+
+
+    protected String getLanguagePrefs(){
+      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+         String language = prefs.getString("language", "Español");
+        if (language.equals("English")) return "en";
+        else return "es";
+    }
+    private void setLanguageForApp(String languageToLoad){
+        Locale locale;
+        if(languageToLoad.equals("not-set")){ //use any value for default
+            locale = Locale.getDefault();
+        }
+        else {
+            locale = new Locale(languageToLoad);
+        }
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+    }
+
+
+
 
     @Override
     protected void onStart() {
@@ -61,6 +101,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         return true;
     }
 
+
+
     private void updateNavigationBarState(){
         int actionId = getNavigationMenuItemId();
         selectBottomNavigationBarItem(actionId);
@@ -93,6 +135,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         return false;
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar,menu);
@@ -108,12 +151,29 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
             case R.id.settings:
                 Intent intent= new Intent(this, SettingsActivity.class);
+                //intent.putExtra("activity",getLocalClassName());
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.logout:
+                LogOut();
                 return true;
 
         }
 
         return false;
+    }
+
+    protected void LogOut()
+    {
+        SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove("email");
+        editor.remove("password");
+        editor.apply();
+
+        Intent intent = new Intent(this, FirstActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

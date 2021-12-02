@@ -46,7 +46,7 @@ public class FirstActivity extends AppCompatActivity {
                             if(insert==true){
                                 Toast.makeText(FirstActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                                 savePrefs(emailAdress,pass);
-                                Intent intent = new Intent(getApplicationContext(),FavouritesActivity.class);
+                                Intent intent = new Intent(getApplicationContext(),MasterDetailActivity.class);
                                 startActivity(intent);
                             }else{
                                 Toast.makeText(FirstActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();

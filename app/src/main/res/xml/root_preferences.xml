@@ -12,15 +12,7 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Sesion">
 
-        <Preference
-            app:title="Cerrar Sesión"
-            app:key="buttonLogout"
-            app:summary="Seleccione para finalizar su sesión"
-            />
-
-    </PreferenceCategory>
 
 
 
