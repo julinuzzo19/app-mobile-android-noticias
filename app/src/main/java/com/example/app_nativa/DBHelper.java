@@ -85,20 +85,26 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public Boolean removeFavourite(int itemId){
+    public Boolean removeFavourite(String itemId){
 
-        SQLiteDatabase MyDB = this.getWritableDatabase();
-        MyDB.delete("favourites",null,null);
-        long result = MyDB.delete("favourites","where id = ?",new String[itemId]);
+       /* long result = MyDB.delete("favourites"," id = ? ",new String[]{itemId});
+        MyDB.close();
+        if (result == 1r) return true;
+        else return false;
+*/
+        String whereClause= "'"+itemId+"'";
 
-        if (result==-1) return false;
-        else return true;
+        //MyDB.execSQL("DELETE FROM favourites WHERE id ="+whereClause );
+
+        MyDB.delete("favourites","id=?",new String[]{itemId});
+
+        return true;
     }
 
     public ArrayList<PlaceholderContent.PlaceholderItem> getFavourites(){
         ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias=new ArrayList<PlaceholderContent.PlaceholderItem>();
 
-        SQLiteDatabase MyDB = this.getWritableDatabase();
+
         Cursor cursor = MyDB.rawQuery("Select * from favourites",null);
 
 
@@ -124,33 +130,5 @@ public class DBHelper extends SQLiteOpenHelper {
        return listaNoticias;
 
     }
-
-    public JSONArray cursorToJsonArray(Cursor cursor) {
-
-        JSONArray resultSet = new JSONArray();
-        cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
-            int totalColumn = cursor.getColumnCount();
-            JSONObject rowObject = new JSONObject();
-            for (int i = 0; i < totalColumn; i++) {
-                if (cursor.getColumnName(i) != null) {
-                    try {
-                        rowObject.put(cursor.getColumnName(i),
-                                cursor.getString(i));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            resultSet.put(rowObject);
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-        return resultSet;
-
-    }
-
-
 
 }

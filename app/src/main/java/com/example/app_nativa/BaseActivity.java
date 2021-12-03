@@ -8,7 +8,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.ContextMenu;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +29,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
 
     protected BottomNavigationView navigationView;
-    AdapterMasterDetail mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
-
-        //mAdapter= getAdapter();
 
     }
 
@@ -71,8 +68,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
     }
-
-
 
 
     @Override
@@ -123,7 +118,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     abstract int getNavigationMenuItemId();
 
-    abstract AdapterMasterDetail getAdapter();
+    public void shareNoticia(PlaceholderContent.PlaceholderItem item)
+    {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, item.getTitle());
+        intent.putExtra(Intent.EXTRA_TEXT,item.getUrl());
+        startActivity(Intent.createChooser(intent, "Share Via"));
+
+        Toast.makeText(getApplicationContext(), R.string.shared, Toast.LENGTH_SHORT).show();
+    }
 
 
 /*

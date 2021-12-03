@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -53,6 +55,28 @@ public class FavouritesActivity extends BaseActivity {
 
     }
 
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        this.closeContextMenu();
+
+        switch (item.getItemId())
+        {
+            case 102:
+                shareNoticia(mAdapter.getItemByPosition(item.getGroupId()));
+                return true;
+            case 103:
+                PlaceholderContent.PlaceholderItem favourite= mAdapter.getItemByPosition(item.getGroupId());
+                Boolean result =db.removeFavourite(favourite.getId());
+                //listaNoticias=db.getFavourites();
+
+                return true;
+        }
+        return false;
+
+    }
+
+
     @Override
     int getContentViewId() {
         return R.layout.activity_favourites;
@@ -63,11 +87,6 @@ public class FavouritesActivity extends BaseActivity {
         return R.id.favouritesActivity;
     }
 
-
-    @Override
-    AdapterMasterDetail getAdapter(){
-        return this.mAdapter;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

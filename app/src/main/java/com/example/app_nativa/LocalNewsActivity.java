@@ -237,9 +237,7 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
             mRecyclerView.setAdapter(mAdapter);
         }
 
-
     }
-
 
     @Override
     int getContentViewId() {
@@ -252,10 +250,6 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
         return R.id.LocalNewsActivity;
     }
 
-    @Override
-    AdapterMasterDetail getAdapter() {
-        return this.mAdapter;
-    }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
@@ -273,12 +267,22 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
                 return true;
 
             case 102:
-                //agregar logica aca
-                Toast.makeText(getApplicationContext(), "Shared", Toast.LENGTH_SHORT).show();
+                shareNoticia(mAdapter.getItemByPosition(item.getGroupId()));
                 return true;
         }
         return false;
     }
+
+   /* public void shareNoticia(PlaceholderContent.PlaceholderItem item)
+    {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, item.getTitle());
+        intent.putExtra(Intent.EXTRA_TEXT,item.getUrl());
+        startActivity(Intent.createChooser(intent, "Share Via"));
+
+        Toast.makeText(getApplicationContext(), R.string.shared, Toast.LENGTH_SHORT).show();
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -301,7 +305,6 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
                 return true;
             }
         });
-
 
         return super.onCreateOptionsMenu(menu);
     }

@@ -36,5 +36,10 @@
     <!-- Context menu -->
     <string name="add_favourites">Agregado a favoritos</string>
     <string name="search_hint">Buscar una noticia</string>
+    <string name="shared">Compartido</string>
+    <string name="share_context_menu">Compartir</string>
+    <string name="favourite_context_menu">Agregar a favoritos</string>
+    <string name="remove_favourite_context_menu">Eliminar de favoritos</string>
+
 
 </resources>

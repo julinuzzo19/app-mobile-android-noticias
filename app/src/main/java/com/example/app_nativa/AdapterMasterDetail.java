@@ -1,6 +1,9 @@
 package com.example.app_nativa;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -34,6 +37,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         this.listaNoticias = listaNoticias;
         this.listaAuxiliar= new ArrayList<>();
         this.listaAuxiliar.addAll(this.listaNoticias);
+
     }
 
 
@@ -56,8 +60,20 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.add(getBindingAdapterPosition(),101,0,"Add to favourites");
-            menu.add(getBindingAdapterPosition(),102,0,"Share new");
+            ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+            ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+
+            String className=cn.getClassName();
+            if (!(className.equals("com.example.app_nativa.FavouritesActivity"))){
+                menu.add(getBindingAdapterPosition(),101,0,R.string.favourite_context_menu);
+                menu.add(getBindingAdapterPosition(),102,0,R.string.share_context_menu);
+            }
+            else{
+                menu.add(getBindingAdapterPosition(),102,0,R.string.share_context_menu);
+                menu.add(getBindingAdapterPosition(),103,0,R.string.remove_favourite_context_menu);
+
+
+            }
         }
     }
 
@@ -79,6 +95,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
     // Este método asigna valores para cada elemento de la lista
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+
 
         viewHolder.title.setText(listaNoticias.get(position).getTitle());
         viewHolder.description.setText(listaNoticias.get(position).getDescription());

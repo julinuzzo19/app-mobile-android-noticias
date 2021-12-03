@@ -5,7 +5,10 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Application;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -26,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MasterDetailActivity extends BaseActivity {
@@ -56,9 +60,6 @@ public class MasterDetailActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-
 
     }
 
@@ -194,9 +195,6 @@ public class MasterDetailActivity extends BaseActivity {
 
                                 mRecyclerView.setAdapter(mAdapter);
         }
-
-
-
     }
 
     @Override
@@ -211,7 +209,7 @@ public class MasterDetailActivity extends BaseActivity {
                 return true;
 
             case 102:
-                Toast.makeText(getApplicationContext(), "Shared", Toast.LENGTH_SHORT).show();
+                shareNoticia(mAdapter.getItemByPosition(item.getGroupId()));
                 return true;
         }
         return false;
@@ -225,11 +223,6 @@ public class MasterDetailActivity extends BaseActivity {
     @Override
     int getNavigationMenuItemId() {
         return R.id.MasterDetailActivity;
-    }
-
-    @Override
-    AdapterMasterDetail getAdapter() {
-        return this.mAdapter;
     }
 
 

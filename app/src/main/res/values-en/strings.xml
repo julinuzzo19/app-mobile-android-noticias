@@ -38,4 +38,10 @@
     <!-- Context menu -->
     <string name="add_favourites">Added to favourites</string>
     <string name="search_hint">Search a new</string>
+    <string name="shared">Shared</string>
+    <string name="share_context_menu">Share</string>
+    <string name="favourite_context_menu">Add to favourites</string>
+    <string name="remove_favourite_context_menu">Delete from favourites</string>
+
+
 </resources>
