@@ -26,11 +26,12 @@ public class FavouritesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_favourites);
+
         setTitle(R.string.name_title_favourite);
         db = new DBHelper(this);
 
-        db.insertFavourite(new PlaceholderContent.PlaceholderItem("title2","author2","desc2","img2","count2","url2","lang2","src2","cat2","hoy2"));
+        //db.insertFavourite(new PlaceholderContent.PlaceholderItem("title2","author2","desc2","img2","count2","url2","lang2","src2","cat2","hoy2"));
+
         mRecyclerView = findViewById(R.id.recyclerViewFavourites);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

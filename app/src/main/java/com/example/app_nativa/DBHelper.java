@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.ViewDebug;
 
 import com.example.app_nativa.placeholder.PlaceholderContent;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DBNAME = "Login.db";
+    SQLiteDatabase MyDB = this.getWritableDatabase();
     public DBHelper(Context context) {
         super(context, "Login.db", null, 1);
     }
@@ -42,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Boolean checkemail(String email) {
-        SQLiteDatabase MyDB = this.getWritableDatabase();
+        //SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ?", new String[]{email});
         if (cursor.getCount() > 0)
             return true;
@@ -51,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Boolean checkemailpassword(String email, String password){
-        SQLiteDatabase MyDB = this.getWritableDatabase();
+        //SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from users where email = ? and password = ?", new String[] {email,password});
         if(cursor.getCount()>0)
             return true;
@@ -61,7 +63,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Boolean insertFavourite(PlaceholderContent.PlaceholderItem noticia)
     {
-        SQLiteDatabase MyDB = this.getWritableDatabase();
+        //usar esta linea para eliminar filas de la tabla
+        //MyDB.delete("favourites",null,null);
         ContentValues contentValues= new ContentValues();
         contentValues.put("id", noticia.getId());
         contentValues.put("title", noticia.getTitle());
@@ -80,6 +83,16 @@ public class DBHelper extends SQLiteOpenHelper {
         if(result==-1) return false;
         else
             return true;
+    }
+
+    public Boolean removeFavourite(int itemId){
+
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        MyDB.delete("favourites",null,null);
+        long result = MyDB.delete("favourites","where id = ?",new String[itemId]);
+
+        if (result==-1) return false;
+        else return true;
     }
 
     public ArrayList<PlaceholderContent.PlaceholderItem> getFavourites(){

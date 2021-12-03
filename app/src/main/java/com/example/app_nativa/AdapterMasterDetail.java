@@ -101,4 +101,10 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         this.listener=listener;
     }
 
+    public PlaceholderContent.PlaceholderItem getItemByPosition(int position)
+    {
+       return listaNoticias.get(position);
+
+    }
+
 }

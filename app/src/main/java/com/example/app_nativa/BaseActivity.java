@@ -122,24 +122,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
 
     @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        super.onContextItemSelected(item);
-        switch (item.getItemId())
-        {
-            case 101:
-                Toast.makeText(getApplicationContext() ,"Added to favourites", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case 102:
-                //agregar logica aca
-                Toast.makeText(getApplicationContext(), "Shared", Toast.LENGTH_SHORT).show();
-                return true;
-        }
-        return false;
-    }
-
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar,menu);
         return super.onCreateOptionsMenu(menu);

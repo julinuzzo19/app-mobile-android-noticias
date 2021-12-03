@@ -34,4 +34,7 @@
     <string name="name_title_favourite">Favourites</string>
     <string name="name_title_explore">Explore</string>
     <string name="name_title_localsnews">Local news</string>
+
+    <!-- Context menu -->
+    <string name="add_favourites">Added to favourites</string>
 </resources>

@@ -32,4 +32,8 @@
     <string name="name_title_favourite">Favoritos</string>
     <string name="name_title_explore">Explorar</string>
     <string name="name_title_localsnews">Noticias locales</string>
+
+    <!-- Context menu -->
+    <string name="add_favourites">Agregado a favoritos</string>
+
 </resources>

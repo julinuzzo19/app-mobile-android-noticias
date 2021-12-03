@@ -1,11 +1,13 @@
 package com.example.app_nativa;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.MenuItem;
 import android.view.View;;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class MasterDetailActivity extends BaseActivity {
     private AdapterMasterDetail mAdapter;
     private RequestQueue requestQueue;
     ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias;
+    DBHelper db;
 
 
     @Override
@@ -42,6 +45,7 @@ public class MasterDetailActivity extends BaseActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        db= new DBHelper(this);
 
         try {
             getNoticias();
@@ -189,6 +193,24 @@ public class MasterDetailActivity extends BaseActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+         super.onContextItemSelected(item);
+        switch (item.getItemId())
+        {
+            case 101:
+               PlaceholderContent.PlaceholderItem favourite= mAdapter.getItemByPosition(item.getGroupId());
+                db.insertFavourite(favourite);
+                Toast.makeText(getApplicationContext(), R.string.add_favourites, Toast.LENGTH_SHORT).show();
+                return true;
+
+            case 102:
+                Toast.makeText(getApplicationContext(), "Shared", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return false;
     }
 
     @Override
