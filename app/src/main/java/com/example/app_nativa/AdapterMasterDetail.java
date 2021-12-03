@@ -1,6 +1,7 @@
 package com.example.app_nativa;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app_nativa.placeholder.PlaceholderContent;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetail.ViewHolder>
  implements View.OnClickListener{
@@ -22,11 +26,14 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
     Context context;
 
     ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias;
+    ArrayList<PlaceholderContent.PlaceholderItem> listaAuxiliar;
     private View.OnClickListener listener;
 
     // Este es nuestro constructor (puede variar según lo que queremos mostrar)
     public AdapterMasterDetail(ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias) {
         this.listaNoticias = listaNoticias;
+        this.listaAuxiliar= new ArrayList<>();
+        this.listaAuxiliar.addAll(this.listaNoticias);
     }
 
 
@@ -105,6 +112,27 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
     {
        return listaNoticias.get(position);
 
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void filter(String textSearch)
+    {
+        int length = textSearch.length();
+
+        if(length == 0)
+        {
+            listaNoticias.clear();
+            listaNoticias.addAll(listaAuxiliar);
+
+        }
+        else {
+            List<PlaceholderContent.PlaceholderItem> collection = listaNoticias.stream().filter(i -> i.getTitle().toLowerCase().contains(textSearch.toLowerCase())).collect(Collectors.toList());
+            listaNoticias.clear();
+            listaNoticias.addAll(collection);
+
+        }
+        notifyDataSetChanged();
     }
 
 }

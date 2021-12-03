@@ -37,4 +37,5 @@
 
     <!-- Context menu -->
     <string name="add_favourites">Added to favourites</string>
+    <string name="search_hint">Search a new</string>
 </resources>

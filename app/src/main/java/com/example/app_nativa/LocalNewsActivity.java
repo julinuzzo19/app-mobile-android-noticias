@@ -1,6 +1,7 @@
 package com.example.app_nativa;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,8 +15,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -249,6 +253,11 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
     }
 
     @Override
+    AdapterMasterDetail getAdapter() {
+        return this.mAdapter;
+    }
+
+    @Override
     public void onLocationChanged(@NonNull Location location) {
 
     }
@@ -270,4 +279,52 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
         }
         return false;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar,menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView= (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Buscar una noticia");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                mAdapter.filter(newText);
+                return true;
+            }
+        });
+
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
+                Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.settings:
+                Intent intent= new Intent(this, SettingsActivity.class);
+                //intent.putExtra("activity",getLocalClassName());
+                startActivity(intent);
+                return true;
+            case R.id.logout:
+                LogOut();
+                return true;
+
+        }
+
+        return false;
+    }
+
 }

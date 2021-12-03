@@ -35,5 +35,6 @@
 
     <!-- Context menu -->
     <string name="add_favourites">Agregado a favoritos</string>
+    <string name="search_hint">Buscar una noticia</string>
 
 </resources>

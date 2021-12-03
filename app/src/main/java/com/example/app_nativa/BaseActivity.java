@@ -5,18 +5,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import com.example.app_nativa.placeholder.PlaceholderContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;
@@ -25,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
 
     protected BottomNavigationView navigationView;
+    AdapterMasterDetail mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
 
-
-
-
+        //mAdapter= getAdapter();
 
     }
 
@@ -120,10 +123,33 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     abstract int getNavigationMenuItemId();
 
+    abstract AdapterMasterDetail getAdapter();
 
-    @Override
+
+/*
+ @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar,menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        SearchView searchView= (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Buscar una noticia");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                mAdapter.filter(newText);
+                return true;
+            }
+        });
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -147,7 +173,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
         return false;
     }
-
+*/
     protected void LogOut()
     {
         SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
@@ -161,4 +187,5 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         startActivity(intent);
         finish();
     }
+
 }
