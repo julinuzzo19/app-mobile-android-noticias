@@ -24,9 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        email = (EditText) findViewById(R.id.email1);
-        password = (EditText) findViewById(R.id.password1);
-        btnlogin = (Button) findViewById(R.id.btnsignin1);
+        email = findViewById(R.id.email1);
+        password = findViewById(R.id.password1);
+        btnlogin = findViewById(R.id.btnsignin1);
         DB = new DBHelper(this);
 
         btnlogin.setOnClickListener(new View.OnClickListener() {

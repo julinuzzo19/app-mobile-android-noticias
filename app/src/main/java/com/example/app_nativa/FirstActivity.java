@@ -36,8 +36,12 @@ public class FirstActivity extends AppCompatActivity {
             String pass = password.getText().toString();
             String repass = repassword.getText().toString();
 
-            if(!(isValidEmail(emailAdress))||pass.equals("")||repass.equals(""))
+            if(emailAdress.equals("")||pass.equals("")||repass.equals(""))
                 Toast.makeText(FirstActivity.this, R.string.complete_fields, Toast.LENGTH_SHORT).show();
+            else if (!(isValidEmail(emailAdress))){
+                Toast.makeText(FirstActivity.this, R.string.check_email, Toast.LENGTH_SHORT).show();
+
+            }
             else{
                 if(pass.equals(repass)){
                     Boolean checkuser = DB.checkEmail(emailAdress);

@@ -149,7 +149,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, item.getTitle());
         intent.putExtra(Intent.EXTRA_TEXT,item.getUrl());
-        startActivity(Intent.createChooser(intent, "Share Via"));
+        startActivity(Intent.createChooser(intent, getString(R.string.share_title)));
 
         Toast.makeText(getApplicationContext(), R.string.shared, Toast.LENGTH_SHORT).show();
     }
@@ -159,7 +159,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         getMenuInflater().inflate(R.menu.action_bar,menu);
         MenuItem menuItem = menu.findItem(R.id.search);
         searchView= (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Buscar una noticia");
+        searchView.setQueryHint(getString(R.string.query_hint));
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -199,9 +199,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             case R.id.logout:
                 LogOut();
                 return true;
-
         }
-
         return false;
     }
 
@@ -235,11 +233,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             {
                 ArrayList<String> array = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 String voice = array.get(0);
-                Toast.makeText(this, voice, Toast.LENGTH_SHORT).show();
 
                 searchView.setIconified(false);
                 searchView.setQuery(voice,true);
-
             }
             else {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();

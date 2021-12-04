@@ -82,13 +82,14 @@ public class MasterDetailActivity extends BaseActivity {
 
 
     public void getNoticias() throws JSONException {
-/*
+        /*
+
         RequestQueue queue = Volley.newRequestQueue(this);
 
          SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
          String language = prefs.getString("language", "es");
 
-        String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca";
+        String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca&sources="+language;
 
         JsonObjectRequest stringRequest = new JsonObjectRequest (Request.Method.GET, url_api,null,
                 response -> {
@@ -106,12 +107,12 @@ public class MasterDetailActivity extends BaseActivity {
                                 String author = itemJson.getString("author");
                                 String country = itemJson.getString("country");
                                 String category = itemJson.getString("category");
-                                String language = itemJson.getString("language");
+                                String lang = itemJson.getString("language");
                                 String published_at = itemJson.getString("published_at");
                                 String source = itemJson.getString("source");
                                 String url = itemJson.getString("url");
 
-                                PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title, author, description, image, country, url, language, source, category, published_at);
+                                PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title, author, description, image, country, url, lang, source, category, published_at);
 
                                 listaNoticias.add(item);
 
@@ -145,9 +146,9 @@ public class MasterDetailActivity extends BaseActivity {
 
 
         queue.add(stringRequest);
+
+
 */
-
-
 
         JSONArray arrayJson= new JSONArray();
 

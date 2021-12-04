@@ -3,7 +3,6 @@ package com.example.app_nativa;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -12,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app_nativa.placeholder.PlaceholderContent;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +43,16 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
-        TextView title,description;
+        TextView title,description,author;
         ImageView image;
         LinearLayout card;
 
         public ViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            description = (TextView) view.findViewById(R.id.description);
-            image = (ImageView) view.findViewById(R.id.image);
+            title = view.findViewById(R.id.title);
+            description = view.findViewById(R.id.description);
+            image = view.findViewById(R.id.image);
+            author = view.findViewById(R.id.author);
             card = view.findViewById(R.id.item_recycler);
             card.setOnCreateContextMenuListener(this);
 
@@ -91,23 +91,21 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         return new ViewHolder(view);
     }
 
-
     // Este método asigna valores para cada elemento de la lista
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-
         viewHolder.title.setText(listaNoticias.get(position).getTitle());
         viewHolder.description.setText(listaNoticias.get(position).getDescription());
-        //viewHolder.image.setImage(listaNoticias.get(position).getImage());
         Glide.with(context).load(listaNoticias.get(position).getImage()).into(viewHolder.image);
+        viewHolder.author.setText(listaNoticias.get(position).getAuthor());
+
     }
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         context = recyclerView.getContext();
     }
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return listaNoticias.size();
@@ -128,7 +126,6 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
     public PlaceholderContent.PlaceholderItem getItemByPosition(int position)
     {
        return listaNoticias.get(position);
-
     }
 
 
@@ -141,7 +138,6 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         {
             listaNoticias.clear();
             listaNoticias.addAll(listaAuxiliar);
-
         }
         else {
             List<PlaceholderContent.PlaceholderItem> collection = listaNoticias.stream().filter(i -> i.getTitle().toLowerCase().contains(textSearch.toLowerCase())).collect(Collectors.toList());

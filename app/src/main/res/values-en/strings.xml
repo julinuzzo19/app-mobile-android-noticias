@@ -18,6 +18,14 @@
     <string name="register_failed">Registration failed</string>
     <string name="user_already_exists">User already exists! please sign in</string>
     <string name="password_incorrect">Passwords not matching</string>
+    <string name="login_tip">Do you already have an account? Log in</string>
+    <string name="register_button">Register</string>
+    <string name="title_text_register">Sign up to see the latest news</string>
+    <string name="password_hint">Password</string>
+    <string name="repassword_hint">Repassword</string>
+    <string name="title_login_text">Sign in to see the latest news</string>
+    <string name="check_email">Incorrect email</string>
+
 
 
     <!-- Preferences -->
@@ -44,6 +52,8 @@
     <string name="share_context_menu">Share</string>
     <string name="favourite_context_menu">Add to favourites</string>
     <string name="remove_favourite_context_menu">Delete from favourites</string>
+    <string name="query_hint">Find news</string>
+    <string name="share_title">Share via</string>
 
 
 </resources>
