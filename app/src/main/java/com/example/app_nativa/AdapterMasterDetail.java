@@ -8,9 +8,12 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +34,6 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
     ArrayList<PlaceholderContent.PlaceholderItem> listaAuxiliar;
     private View.OnClickListener listener;
 
-    // Este es nuestro constructor (puede variar según lo que queremos mostrar)
     public AdapterMasterDetail(ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias) {
         this.listaNoticias = listaNoticias;
         this.listaAuxiliar= new ArrayList<>();
@@ -71,34 +73,34 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
             else{
                 menu.add(getBindingAdapterPosition(),102,0,R.string.share_context_menu);
                 menu.add(getBindingAdapterPosition(),103,0,R.string.remove_favourite_context_menu);
-
-
             }
         }
     }
-
 
 
     // El layout manager invoca este método
     // para renderizar cada elemento del RecyclerView
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_list_noticias, viewGroup, false);
 
-        view.setOnClickListener(this);
-        return new ViewHolder(view);
+            View view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_list_noticias, viewGroup, false);
+
+            view.setOnClickListener(this);
+            return new ViewHolder(view);
+
     }
 
     // Este método asigna valores para cada elemento de la lista
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
+        if (viewHolder.title !=null){
         viewHolder.title.setText(listaNoticias.get(position).getTitle());
         viewHolder.description.setText(listaNoticias.get(position).getDescription());
         Glide.with(context).load(listaNoticias.get(position).getImage()).into(viewHolder.image);
         viewHolder.author.setText(listaNoticias.get(position).getAuthor());
+        }
 
     }
     @Override

@@ -18,10 +18,18 @@ public class DetailActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String value = extras.getString("url");
+            String url = extras.getString("url");
+            String title = extras.getString("url");
+            String description = extras.getString("url");
+            String image = extras.getString("url");
+            String author = extras.getString("url");
+            String source = extras.getString("url");
+            String country = extras.getString("url");
+            String category = extras.getString("url");
+            String published_at = extras.getString("url");
             webView=findViewById(R.id.webview);
             webView.setWebViewClient(new WebViewClient());
-            webView.loadUrl(value);
+            webView.loadUrl(url);
         }
 
 

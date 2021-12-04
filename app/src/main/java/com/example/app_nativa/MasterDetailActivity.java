@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;;
+import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -54,7 +56,6 @@ public class MasterDetailActivity extends BaseActivity {
     Boolean notificacionState;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +72,6 @@ public class MasterDetailActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         db = new DBHelper(this);
-
         try {
             getNoticias();
         } catch (JSONException e) {
@@ -80,16 +80,15 @@ public class MasterDetailActivity extends BaseActivity {
 
     }
 
-
     public void getNoticias() throws JSONException {
-        /*
 
-        RequestQueue queue = Volley.newRequestQueue(this);
+
+        requestQueue= Volley.newRequestQueue(this);
 
          SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
          String language = prefs.getString("language", "es");
 
-        String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca&sources="+language;
+        String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca&limit=50&sources="+language;
 
         JsonObjectRequest stringRequest = new JsonObjectRequest (Request.Method.GET, url_api,null,
                 response -> {
@@ -121,6 +120,14 @@ public class MasterDetailActivity extends BaseActivity {
                                 mAdapter.setOnClickListener(v -> {
                                     Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                                     intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+                                    intent.putExtra("title", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getTitle());
+                                    intent.putExtra("desription", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getDescription());
+                                    intent.putExtra("image", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getImage());
+                                    intent.putExtra("author", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getAuthor());
+                                    intent.putExtra("source", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getSource());
+                                    intent.putExtra("country", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getCountry());
+                                    intent.putExtra("category", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getCategory());
+                                    intent.putExtra("published_at", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getPublished_at());
                                     startActivity(intent);
                                 });
 
@@ -136,6 +143,7 @@ public class MasterDetailActivity extends BaseActivity {
                         }
                         }
 
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -144,12 +152,11 @@ public class MasterDetailActivity extends BaseActivity {
                     Toast.makeText(getApplicationContext(), "err", Toast.LENGTH_SHORT).show();
                 });
 
+        requestQueue.add(stringRequest);
 
-        queue.add(stringRequest);
 
 
-*/
-
+/*
         JSONArray arrayJson= new JSONArray();
 
         JSONObject objetoJson1 = new JSONObject();
@@ -226,7 +233,7 @@ public class MasterDetailActivity extends BaseActivity {
                 notificationManager.notify(1, builder.build());
             }
 
-        }
+        }*/
     }
 
     @Override
