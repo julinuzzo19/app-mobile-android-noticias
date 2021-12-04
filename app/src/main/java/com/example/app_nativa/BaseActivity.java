@@ -108,14 +108,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         switch (item.getItemId()){
             case R.id.MasterDetailActivity:{
                 startActivity(new Intent(this, MasterDetailActivity.class));
+                overridePendingTransition(0,0);
                 break;
             }
             case R.id.LocalNewsActivity:{
                 startActivity(new Intent(this, LocalNewsActivity.class));
+                overridePendingTransition(0,0);
                 break;
             }
             case R.id.favouritesActivity:{
                 startActivity(new Intent(this, FavouritesActivity.class));
+                overridePendingTransition(0,0);
                 break;
             }
         }
@@ -190,8 +193,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
             case R.id.settings:
                 Intent intent= new Intent(this, SettingsActivity.class);
-                //intent.putExtra("activity",getLocalClassName());
                 startActivity(intent);
+                overridePendingTransition(0,0);
                 return true;
             case R.id.logout:
                 LogOut();

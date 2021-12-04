@@ -27,24 +27,21 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
+
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            lastActivity = extras.getString("activity");
-
-        }*/
-
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
             }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
 
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            startActivity(new Intent(this, MasterDetailActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -56,19 +53,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-
-    /*
   @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
-      Intent intent = null;
-      try {
-          intent = new Intent(this, Class.forName(lastActivity));
-          startActivity(intent);
-      } catch (ClassNotFoundException e) {
-          e.printStackTrace();
-      }
+        Intent intent = new Intent(this, MasterDetailActivity.class);
+        startActivity(intent);
+      overridePendingTransition(0,0);
+    }
 
-    }*/
 }

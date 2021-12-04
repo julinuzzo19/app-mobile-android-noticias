@@ -3,7 +3,6 @@
 
     <string name="app_name">NotiDroid</string>
     <string name="title_item_detail">Detail</string>
-
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -11,10 +10,14 @@
     <string name="action_sign_in_short">Log in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-
-
+    <string name="complete_fields">Please enter all the fields</string>
+    <string name="login_success">Sign in successfull</string>
+    <string name="invalid_credentials">Invalid Credentials</string>
+    <string name="register_success">Registered successfully</string>
+    <string name="register_failed">Registration failed</string>
+    <string name="user_already_exists">User already exists! please sign in</string>
+    <string name="password_incorrect">Passwords not matching</string>
 
 
     <!-- Preferences -->

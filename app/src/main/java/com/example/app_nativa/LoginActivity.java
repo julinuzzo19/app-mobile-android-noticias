@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        email = (EditText) findViewById(R.id.email1); //asociar ccon xml activity_login
+        email = (EditText) findViewById(R.id.email1);
         password = (EditText) findViewById(R.id.password1);
         btnlogin = (Button) findViewById(R.id.btnsignin1);
         DB = new DBHelper(this);
@@ -34,17 +36,17 @@ public class LoginActivity extends AppCompatActivity {
                 String emailAdress = email.getText().toString();
                 String pass = password.getText().toString();
 
-                if(emailAdress.equals("")||pass.equals(""))
-                    Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                if(!(isValidEmail(emailAdress))||pass.equals(""))
+                    Toast.makeText(LoginActivity.this, R.string.complete_fields, Toast.LENGTH_SHORT).show();
                 else{
-                    Boolean checkuserpass = DB.checkemailpassword(emailAdress, pass);
-                    if(checkuserpass==true){
-                        Toast.makeText(LoginActivity.this, "Sign in successfull", Toast.LENGTH_SHORT).show();
+                    Boolean checkUserPass = DB.checkEmailPassword(emailAdress, pass);
+                    if(checkUserPass==true){
+                        Toast.makeText(LoginActivity.this, R.string.login_success, Toast.LENGTH_SHORT).show();
                         savePrefs(emailAdress,pass);
                         Intent intent  = new Intent(getApplicationContext(), MasterDetailActivity.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, R.string.invalid_credentials, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -59,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("password", password);
         editor.apply();
     }
-
+    public boolean isValidEmail(CharSequence email) {
+        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+    }
 
 }
