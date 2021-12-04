@@ -1,10 +1,15 @@
 package com.example.app_nativa;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -22,11 +27,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.preference.PreferenceManager;
 
 import com.example.app_nativa.placeholder.PlaceholderContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -37,11 +48,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     protected AdapterMasterDetail mAdapter;
     SearchView searchView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String lang= getLanguagePrefs();
         setLanguageForApp(lang);
+
 
         setContentView(getContentViewId());
 
@@ -138,8 +151,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         Toast.makeText(getApplicationContext(), R.string.shared, Toast.LENGTH_SHORT).show();
     }
 
-
-
  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar,menu);
@@ -159,7 +170,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             @Override
             public boolean onQueryTextChange(String newText) {
             if (mAdapter==null){mAdapter=  getAdapter();}
-
                 mAdapter.filter(newText);
                 return true;
             }
@@ -172,7 +182,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.search:
-                Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.search_voice:
@@ -233,4 +242,5 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
     }
+
 }

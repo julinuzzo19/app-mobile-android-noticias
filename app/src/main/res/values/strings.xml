@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App-nativa</string>
+    <string name="app_name">NotiDroid</string>
     <string name="title_item_detail">Detalle</string>
     <string name="title_activity_login">Iniciar sesión</string>
     <string name="prompt_email">Email</string>
@@ -11,24 +11,22 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <!-- Preference  -->
+    <string name="category_language">Idioma</string>
+    <string name="preference_language">Seleccione un idioma</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
+    <string name="category_notifications">Notificaciones</string>
+    <string name="preference_notifications">Mostrar notificaciones</string>
+
+
+
+
+
+
+    <string name="title_activity_settings">Preferencias</string>
     <string name="name_title_favourite">Favoritos</string>
     <string name="name_title_explore">Explorar</string>
     <string name="name_title_localsnews">Noticias locales</string>

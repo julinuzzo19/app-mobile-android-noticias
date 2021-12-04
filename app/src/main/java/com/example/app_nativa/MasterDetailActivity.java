@@ -2,11 +2,20 @@ package com.example.app_nativa;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.os.Build;
@@ -23,6 +32,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.app_nativa.placeholder.PlaceholderContent;
 
 import org.json.JSONArray;
@@ -31,6 +41,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MasterDetailActivity extends BaseActivity {
 
@@ -39,12 +50,18 @@ public class MasterDetailActivity extends BaseActivity {
     private RequestQueue requestQueue;
     ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias;
     DBHelper db;
+    NotificationCompat.Builder builder;
+    Boolean notificacionState;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.name_title_explore);
+
+        createNotificationChannel();
+        notificacionState = getNotificationState();
 
         listaNoticias = new ArrayList<>();
         requestQueue=Volley.newRequestQueue(this);
@@ -53,7 +70,7 @@ public class MasterDetailActivity extends BaseActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        db= new DBHelper(this);
+        db = new DBHelper(this);
 
         try {
             getNoticias();
@@ -107,6 +124,13 @@ public class MasterDetailActivity extends BaseActivity {
                                 });
 
                                 mRecyclerView.setAdapter(mAdapter);
+
+                                if (notificacionState)
+                                {
+                                    builder=createNotification(item);
+                                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                                    notificationManager.notify(1, builder.build());
+                                }
                             }
                         }
                         }
@@ -185,15 +209,22 @@ public class MasterDetailActivity extends BaseActivity {
             PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
 
             listaNoticias.add(item);
-            mAdapter=new AdapterMasterDetail(listaNoticias);
+            mAdapter = new AdapterMasterDetail(listaNoticias);
+            mAdapter.setOnClickListener(v -> {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+                startActivity(intent);
+                });
+            mRecyclerView.setAdapter(mAdapter);
 
-                                mAdapter.setOnClickListener(v -> {
-                                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                                    intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
-                                    startActivity(intent);
-                                });
+            //set notification for 1st new
+            if (notificacionState)
+            {
+                builder=createNotification(item);
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                notificationManager.notify(1, builder.build());
+            }
 
-                                mRecyclerView.setAdapter(mAdapter);
         }
     }
 
@@ -231,5 +262,42 @@ public class MasterDetailActivity extends BaseActivity {
     }
 
 
+    public NotificationCompat.Builder createNotification(PlaceholderContent.PlaceholderItem item){
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("url",item.getUrl() );
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        builder = new NotificationCompat.Builder(this, "channel")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(item.getTitle())
+                .setContentText(item.getDescription())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+        return builder;
+
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "name";
+            String description = "channel_description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("channel", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    protected Boolean getNotificationState(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean notificationState = prefs.getBoolean("notifications", true);
+
+        return notificationState;
+
+    }
 
 }
