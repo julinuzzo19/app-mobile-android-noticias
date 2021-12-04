@@ -10,6 +10,12 @@
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
     <item
+        android:id="@+id/search_voice"
+        android:icon="@drawable/ic_voice"
+        android:title="Search"
+        app:showAsAction="always"
+        />
+    <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="Settings"

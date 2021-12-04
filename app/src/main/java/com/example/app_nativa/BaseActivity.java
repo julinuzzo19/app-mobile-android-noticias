@@ -7,15 +7,19 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.DisplayMetrics;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
@@ -23,12 +27,15 @@ import androidx.preference.PreferenceManager;
 import com.example.app_nativa.placeholder.PlaceholderContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public abstract class BaseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     protected BottomNavigationView navigationView;
+    protected AdapterMasterDetail mAdapter;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +125,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
     abstract int getNavigationMenuItemId();
 
+    abstract AdapterMasterDetail getAdapter();
+
     public void shareNoticia(PlaceholderContent.PlaceholderItem item)
     {
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -130,29 +139,31 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     }
 
 
-/*
+
  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar,menu);
         MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView= (SearchView) menuItem.getActionView();
+        searchView= (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Buscar una noticia");
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
+
             }
 
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onQueryTextChange(String newText) {
+            if (mAdapter==null){mAdapter=  getAdapter();}
 
                 mAdapter.filter(newText);
                 return true;
             }
         });
-
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -162,6 +173,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         switch (item.getItemId()){
             case R.id.search:
                 Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.search_voice:
+                getVoice();
                 return true;
 
             case R.id.settings:
@@ -177,7 +192,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
         return false;
     }
-*/
+
     protected void LogOut()
     {
         SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
@@ -192,4 +207,30 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         finish();
     }
 
+    protected void getVoice()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"es-ES");
+
+        startActivityForResult(intent, 200);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == 200 && resultCode == RESULT_OK)
+            {
+                ArrayList<String> array = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String voice = array.get(0);
+                Toast.makeText(this, voice, Toast.LENGTH_SHORT).show();
+
+                searchView.setIconified(false);
+                searchView.setQuery(voice,true);
+
+            }
+            else {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            }
+    }
 }

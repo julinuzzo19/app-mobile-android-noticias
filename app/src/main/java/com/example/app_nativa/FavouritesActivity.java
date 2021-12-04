@@ -87,52 +87,11 @@ public class FavouritesActivity extends BaseActivity {
         return R.id.favouritesActivity;
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar,menu);
-        MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView= (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Buscar una noticia");
+    AdapterMasterDetail getAdapter() {
+        return mAdapter;
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                mAdapter.filter(newText);
-                return true;
-            }
-        });
-
-
-        return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.search:
-                Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.settings:
-                Intent intent= new Intent(this, SettingsActivity.class);
-                //intent.putExtra("activity",getLocalClassName());
-                startActivity(intent);
-                return true;
-            case R.id.logout:
-                LogOut();
-                return true;
-
-        }
-
-        return false;
-    }
 
 }
