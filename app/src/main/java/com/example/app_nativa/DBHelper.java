@@ -63,27 +63,33 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Boolean insertFavourite(PlaceholderContent.PlaceholderItem noticia)
     {
-        //usar esta linea para eliminar filas de la tabla
-        //MyDB.delete("favourites",null,null);
-        ContentValues contentValues= new ContentValues();
-        contentValues.put("id", noticia.getId());
-        contentValues.put("title", noticia.getTitle());
-        contentValues.put("image", noticia.getImage());
-        contentValues.put("description", noticia.getDescription());
-        contentValues.put("url", noticia.getUrl());
-        contentValues.put("author", noticia.getAuthor());
-        contentValues.put("source", noticia.getSource());
-        contentValues.put("published_at", noticia.getPublished_at());
-        contentValues.put("category", noticia.getCategory());
-        contentValues.put("country", noticia.getCountry());
-        contentValues.put("language", noticia.getLanguage());
+        Cursor cursor = MyDB.rawQuery("Select * from favourites where title = ?", new String[]{noticia.title});
+
+          int count =  cursor.getCount();
+
+          if (count == 0) {
+
+              ContentValues contentValues = new ContentValues();
+              contentValues.put("id", noticia.getId());
+              contentValues.put("title", noticia.getTitle());
+              contentValues.put("image", noticia.getImage());
+              contentValues.put("description", noticia.getDescription());
+              contentValues.put("url", noticia.getUrl());
+              contentValues.put("author", noticia.getAuthor());
+              contentValues.put("source", noticia.getSource());
+              contentValues.put("published_at", noticia.getPublished_at());
+              contentValues.put("category", noticia.getCategory());
+              contentValues.put("country", noticia.getCountry());
+              contentValues.put("language", noticia.getLanguage());
 
 
-        long result = MyDB.insert("favourites", null, contentValues);
-        if(result==-1) return false;
-        else
-            return true;
-    }
+              long result = MyDB.insert("favourites", null, contentValues);
+              if (result == -1) return false;
+              else
+                  return true;
+          }
+          else return false;
+        }
 
     public Boolean removeFavourite (String itemId){
 

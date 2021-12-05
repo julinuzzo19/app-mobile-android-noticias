@@ -51,6 +51,7 @@
     <string name="see_web">Ver página web</string>
     <string name="setting_option">Configuración</string>
     <string name="logout_option">Cerrar sesión</string>
+    <string name="favourites_exists">Ya se encuentra en favoritos</string>
 
 
 </resources>

@@ -9,8 +9,10 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.app_nativa.placeholder.PlaceholderContent;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,15 +21,18 @@ import java.util.Date;
 
 public class DetailActivity extends AppCompatActivity {
 
-    public TextView titleView, descriptionView,authorView,sourceView,published_atView;
+    public TextView titleView, descriptionView,authorView,published_atView;
     public ImageView imageView;
-    public Button button_webView;
+    public Button button_webView,btn_add_favourites;
+    DBHelper db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        db = new DBHelper(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -36,7 +41,12 @@ public class DetailActivity extends AppCompatActivity {
             String description = extras.getString("description");
             String image = extras.getString("image");
             String author = extras.getString("author");
+            String source = extras.getString("source");
             String published_at = extras.getString("published_at");
+            String category = extras.getString("category");
+            String language = extras.getString("language");
+            String country = extras.getString("country");
+
 
 
             titleView = findViewById(R.id.title);
@@ -73,10 +83,15 @@ public class DetailActivity extends AppCompatActivity {
                 overridePendingTransition(0,0);
 
             });
+            btn_add_favourites = findViewById(R.id.btn_add_favourites);
 
+            PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
 
+            btn_add_favourites.setOnClickListener(v -> {
+               Boolean response =db.insertFavourite(item);
+                if (response) Toast.makeText(getApplicationContext(), R.string.add_favourites, Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getApplicationContext(), R.string.favourites_exists, Toast.LENGTH_SHORT).show();
+            });
         }
     }
-
-
 }

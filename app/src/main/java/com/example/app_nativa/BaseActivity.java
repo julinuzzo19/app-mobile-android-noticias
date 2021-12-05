@@ -150,8 +150,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         intent.putExtra(Intent.EXTRA_SUBJECT, item.getTitle());
         intent.putExtra(Intent.EXTRA_TEXT,item.getUrl());
         startActivity(Intent.createChooser(intent, getString(R.string.share_title)));
-
-        Toast.makeText(getApplicationContext(), R.string.shared, Toast.LENGTH_SHORT).show();
     }
 
  @Override

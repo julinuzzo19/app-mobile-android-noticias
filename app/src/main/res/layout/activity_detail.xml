@@ -75,16 +75,31 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginTop="10dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_see_web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/see_web"
+        android:layout_marginLeft="10dp"
+        />
+
+    <Button
+        android:id="@+id/btn_add_favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favourite_context_menu"
+        android:layout_marginLeft="20dp"
+
+        />
 
 
-        <Button
-            android:id="@+id/btn_see_web"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="80dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/see_web"
-            />
+</LinearLayout>
+
+
 
     </LinearLayout>
 

@@ -57,6 +57,7 @@
     <string name="see_web">See web</string>
     <string name="setting_option">Settings</string>
     <string name="logout_option">Logout</string>
+    <string name="favourites_exists">Is already in favorites </string>
 
 
 </resources>
