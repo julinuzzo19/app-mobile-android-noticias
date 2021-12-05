@@ -1,5 +1,6 @@
 package com.example.app_nativa;
 
+
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,6 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -45,7 +50,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
-        TextView title,description,author;
+        TextView title,description,published_at, author;
         ImageView image;
         LinearLayout card;
 
@@ -54,6 +59,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
             title = view.findViewById(R.id.title);
             description = view.findViewById(R.id.description);
             image = view.findViewById(R.id.image);
+            published_at = view.findViewById(R.id.published_at);
             author = view.findViewById(R.id.author);
             card = view.findViewById(R.id.item_recycler);
             card.setOnCreateContextMenuListener(this);
@@ -78,7 +84,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
     }
 
 
-    // El layout manager invoca este método
+    // El layout manager iwnvoca este método
     // para renderizar cada elemento del RecyclerView
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -98,8 +104,23 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         if (viewHolder.title !=null){
         viewHolder.title.setText(listaNoticias.get(position).getTitle());
         viewHolder.description.setText(listaNoticias.get(position).getDescription());
-        Glide.with(context).load(listaNoticias.get(position).getImage()).into(viewHolder.image);
         viewHolder.author.setText(listaNoticias.get(position).getAuthor());
+        Glide.with(context).load(listaNoticias.get(position).getImage()).into(viewHolder.image);
+
+
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = null;
+            String result = null;
+
+            try {
+                date = inputFormat.parse(listaNoticias.get(position).getPublished_at());
+                result = outputFormat.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        viewHolder.published_at.setText(result);
         }
 
     }

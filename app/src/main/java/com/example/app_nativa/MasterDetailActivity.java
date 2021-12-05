@@ -121,7 +121,7 @@ public class MasterDetailActivity extends BaseActivity {
                                     Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                                     intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
                                     intent.putExtra("title", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getTitle());
-                                    intent.putExtra("desription", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getDescription());
+                                    intent.putExtra("description", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getDescription());
                                     intent.putExtra("image", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getImage());
                                     intent.putExtra("author", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getAuthor());
                                     intent.putExtra("source", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getSource());

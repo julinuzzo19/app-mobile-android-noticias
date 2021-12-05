@@ -24,7 +24,6 @@
     <string name="password_hint">Contraseña</string>
 
 
-
     <!-- Preference  -->
     <string name="title_activity_settings">Preferencias</string>
 
@@ -33,7 +32,6 @@
 
     <string name="category_notifications">Notificaciones</string>
     <string name="preference_notifications">Mostrar notificaciones</string>
-
 
 
     <string name="name_title_favourite">Favoritos</string>
@@ -50,6 +48,16 @@
     <string name="query_hint">Buscar noticias</string>
     <string name="share_title">Compartir via</string>
     <string name="check_email">Verifique su email</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="see_web">Ver página web</string>
 
 
 </resources>
