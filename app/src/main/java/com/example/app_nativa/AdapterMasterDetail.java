@@ -171,4 +171,5 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         notifyDataSetChanged();
     }
 
+
 }

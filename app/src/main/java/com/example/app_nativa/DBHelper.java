@@ -85,20 +85,12 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public Boolean removeFavourite(String itemId){
+    public Boolean removeFavourite (String itemId){
 
-       /* long result = MyDB.delete("favourites"," id = ? ",new String[]{itemId});
-        MyDB.close();
-        if (result == 1r) return true;
-        else return false;
-*/
-        String whereClause= "'"+itemId+"'";
+       long result = MyDB.delete("favourites","title=?",new String[]{itemId});
 
-        //MyDB.execSQL("DELETE FROM favourites WHERE id ="+whereClause );
-
-        MyDB.delete("favourites","id=?",new String[]{itemId});
-
-        return true;
+       if (result == 1) return true;
+        return false;
     }
 
     public ArrayList<PlaceholderContent.PlaceholderItem> getFavourites(){
@@ -106,8 +98,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         Cursor cursor = MyDB.rawQuery("Select * from favourites",null);
-
-
 
         while(cursor.moveToNext()) {
             String id = cursor.getString(0);
@@ -125,7 +115,6 @@ public class DBHelper extends SQLiteOpenHelper {
             PlaceholderContent.PlaceholderItem item = new PlaceholderContent.PlaceholderItem(title,author,description,image,country,url,language,source,category,published_at);
             listaNoticias.add(item);
         }
-
 
        return listaNoticias;
 

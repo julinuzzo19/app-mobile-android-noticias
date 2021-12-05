@@ -19,7 +19,7 @@
     <string name="register_button">Registrarse</string>
     <string name="password_incorrect">Contraseña incorrecta</string>
     <string name="repassword_hint">Repite la contraseña</string>
-    <string name="title_login_text">Inicia sesión para ver las ultimas noticias</string>
+    <string name="title_login_text">Inicia sesión para ver las últimas noticias</string>
     <string name="title_text_register">Regístrate para ver las últimas noticias</string>
     <string name="password_hint">Contraseña</string>
 
@@ -48,16 +48,9 @@
     <string name="query_hint">Buscar noticias</string>
     <string name="share_title">Compartir via</string>
     <string name="check_email">Verifique su email</string>
-    <string name="title_activity_web_view">WebViewActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="see_web">Ver página web</string>
+    <string name="setting_option">Configuración</string>
+    <string name="logout_option">Cerrar sesión</string>
 
 
 </resources>

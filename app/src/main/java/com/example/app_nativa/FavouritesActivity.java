@@ -48,6 +48,14 @@ public class FavouritesActivity extends BaseActivity {
         mAdapter.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
             intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
+            intent.putExtra("title", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getTitle());
+            intent.putExtra("description", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getDescription());
+            intent.putExtra("image", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getImage());
+            intent.putExtra("author", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getAuthor());
+            intent.putExtra("source", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getSource());
+            intent.putExtra("country", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getCountry());
+            intent.putExtra("category", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getCategory());
+            intent.putExtra("published_at", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getPublished_at());
             startActivity(intent);
         });
 
@@ -67,8 +75,18 @@ public class FavouritesActivity extends BaseActivity {
                 return true;
             case 103:
                 PlaceholderContent.PlaceholderItem favourite= mAdapter.getItemByPosition(item.getGroupId());
-                Boolean result =db.removeFavourite(favourite.getId());
-                //listaNoticias=db.getFavourites();
+                Boolean result =db.removeFavourite(favourite.getTitle());
+                if (result)
+                {
+                    //listaNoticias.remove(mAdapter.getItemByPosition(item.getGroupId()));
+                    listaNoticias.remove(item.getGroupId());
+                    mAdapter.notifyItemRemoved(item.getGroupId());
+
+
+
+                }
+                else{return false;}
+
 
                 return true;
         }

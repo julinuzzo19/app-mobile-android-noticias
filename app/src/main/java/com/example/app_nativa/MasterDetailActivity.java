@@ -233,7 +233,9 @@ public class MasterDetailActivity extends BaseActivity {
                 notificationManager.notify(1, builder.build());
             }
 
-        }*/
+        }
+        */
+
     }
 
     @Override
@@ -277,6 +279,7 @@ public class MasterDetailActivity extends BaseActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         builder = new NotificationCompat.Builder(this, "channel")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(item.getDescription()))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(item.getTitle())
                 .setContentText(item.getDescription())

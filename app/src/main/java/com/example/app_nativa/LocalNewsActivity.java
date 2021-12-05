@@ -115,7 +115,7 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
     public void getLocalNews(String country_code) throws JSONException {
 
         /*
-        String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca"+"&countries="+country_code;
+        String url_api = "http://api.mediastack.com/v1/news?access_key=d67e5f39b3825efab82f83e260ae52ca"+"&limit=50"+"&countries="+country_code;
 
         JsonObjectRequest objectRequest = new JsonObjectRequest (Request.Method.GET, url_api,null,
                 response -> {
@@ -146,6 +146,14 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
 
                                     mAdapter.setOnClickListener(v -> {
                                         Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                                        intent.putExtra("title", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getTitle());
+                                        intent.putExtra("description", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getDescription());
+                                        intent.putExtra("image", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getImage());
+                                        intent.putExtra("author", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getAuthor());
+                                        intent.putExtra("source", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getSource());
+                                        intent.putExtra("country", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getCountry());
+                                        intent.putExtra("category", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getCategory());
+                                        intent.putExtra("published_at", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getPublished_at());
                                         intent.putExtra("url", listaNoticias.get(mRecyclerView.getChildAdapterPosition(v)).getUrl());
                                         startActivity(intent);
                                     });
@@ -246,7 +254,6 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
         return R.layout.activity_local_news;
     }
 
-    // action you want to selected - eg. i want home btn to get selected
     @Override
     int getNavigationMenuItemId() {
         return R.id.LocalNewsActivity;
