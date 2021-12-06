@@ -104,7 +104,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
         if (viewHolder.title !=null){
         viewHolder.title.setText(listaNoticias.get(position).getTitle());
         viewHolder.description.setText(listaNoticias.get(position).getDescription());
-        viewHolder.author.setText(listaNoticias.get(position).getAuthor());
+        if (!listaNoticias.get(position).getAuthor().equals("null")) viewHolder.author.setText(listaNoticias.get(position).getAuthor());
         Glide.with(context).load(listaNoticias.get(position).getImage()).into(viewHolder.image);
 
 

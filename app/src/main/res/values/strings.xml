@@ -48,7 +48,7 @@
     <string name="query_hint">Buscar noticias</string>
     <string name="share_title">Compartir via</string>
     <string name="check_email">Verifique su email</string>
-    <string name="see_web">Ver página web</string>
+    <string name="see_web">Ver página</string>
     <string name="setting_option">Configuración</string>
     <string name="logout_option">Cerrar sesión</string>
     <string name="favourites_exists">Ya se encuentra en favoritos</string>

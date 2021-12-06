@@ -70,7 +70,7 @@ public class DetailActivity extends AppCompatActivity {
             Glide.with(this).load(image).into(imageView);
             titleView.setText(title);
             descriptionView.setText(description);
-            authorView.setText(author);
+            if (!author.equals("null")) authorView.setText(author);
             published_atView.setText(result);
 
             button_webView = findViewById(R.id.btn_see_web);

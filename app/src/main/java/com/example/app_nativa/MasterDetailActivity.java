@@ -89,7 +89,7 @@ public class MasterDetailActivity extends BaseActivity {
          SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
          String language = prefs.getString("language", "es");
 
-        String url_api = "http://api.mediastack.com/v1/news?access_key=98fa36b39718213b60d8c657c3a47f96&limit=50&sources="+language;
+        String url_api = "http://api.mediastack.com/v1/news?access_key=98fa36b39718213b60d8c657c3a47f96&limit=50&sort=published_desc&sources="+language;
 
         JsonObjectRequest stringRequest = new JsonObjectRequest (Request.Method.GET, url_api,null,
                 response -> {
@@ -135,7 +135,7 @@ public class MasterDetailActivity extends BaseActivity {
 
                                 mRecyclerView.setAdapter(mAdapter);
 
-                                if (notificacionState)
+                                if (i==0)
                                 {
                                     builder=createNotification(item);
                                     NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
@@ -218,8 +218,7 @@ public class MasterDetailActivity extends BaseActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         builder = new NotificationCompat.Builder(this, "channel")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),R.mipmap.ic_launcher))
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(item.getDescription()))
                 .setContentTitle(item.getTitle())
                 .setContentText(item.getDescription())

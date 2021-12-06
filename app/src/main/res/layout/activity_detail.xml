@@ -81,19 +81,18 @@
 
     <Button
         android:id="@+id/btn_see_web"
-        android:layout_width="wrap_content"
+        android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:text="@string/see_web"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="7dp"
         />
 
     <Button
         android:id="@+id/btn_add_favourites"
-        android:layout_width="wrap_content"
+        android:layout_width="208dp"
         android:layout_height="wrap_content"
         android:text="@string/favourite_context_menu"
-        android:layout_marginLeft="20dp"
-
+        android:layout_marginLeft="10dp"
         />
 
 
