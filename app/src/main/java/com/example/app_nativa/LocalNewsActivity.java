@@ -110,7 +110,7 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
 
     public void getLocalNews(String country_code) throws JSONException {
 
-        String url_api = "http://api.mediastack.com/v1/news?access_key=98fa36b39718213b60d8c657c3a47f96"+"&limit=49"+"&countries="+country_code;
+        String url_api = "http://api.mediastack.com/v1/news?access_key=98fa36b39718213b60d8c657c3a47f96"+"&sort=published_desc&limit=49"+"&countries="+country_code;
 
         JsonObjectRequest objectRequest = new JsonObjectRequest (Request.Method.GET, url_api,null,
                 response -> {
