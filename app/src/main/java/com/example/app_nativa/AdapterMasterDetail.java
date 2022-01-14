@@ -50,14 +50,14 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
-        TextView title,description,published_at, author;
+        TextView title,published_at, author;
         ImageView image;
         LinearLayout card;
 
         public ViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
-            description = view.findViewById(R.id.description);
+            //description = view.findViewById(R.id.description);
             image = view.findViewById(R.id.image);
             published_at = view.findViewById(R.id.published_at);
             author = view.findViewById(R.id.author);
@@ -103,7 +103,7 @@ public class AdapterMasterDetail extends RecyclerView.Adapter<AdapterMasterDetai
 
         if (viewHolder.title !=null){
         viewHolder.title.setText(listaNoticias.get(position).getTitle());
-        viewHolder.description.setText(listaNoticias.get(position).getDescription());
+        //viewHolder.description.setText(listaNoticias.get(position).getDescription());
         if (!listaNoticias.get(position).getAuthor().equals("null")) viewHolder.author.setText(listaNoticias.get(position).getAuthor());
         Glide.with(context).load(listaNoticias.get(position).getImage()).into(viewHolder.image);
 
