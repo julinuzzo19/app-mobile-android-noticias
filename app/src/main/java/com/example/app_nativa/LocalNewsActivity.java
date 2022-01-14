@@ -53,10 +53,20 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
         mRecyclerView = findViewById(R.id.recyclerViewLocals);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        getLocationCountry();
-        db= new DBHelper(this);
-    }
+        //getLocationCountry();
+        // hardcoded
+        try {
+            getLocalNews("ar");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+
+        db= new DBHelper(this);
+
+
+    }
+/*
     public void getLocationCountry() {
         Double latitude;
         Double longitude;
@@ -107,6 +117,8 @@ public class LocalNewsActivity extends BaseActivity implements LocationListener 
         requestQueue.add(objectRequest);
 
     }
+    */
+
 
     public void getLocalNews(String country_code) throws JSONException {
 
