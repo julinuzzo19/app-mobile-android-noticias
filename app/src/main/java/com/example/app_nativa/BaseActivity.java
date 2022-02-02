@@ -30,9 +30,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.app_nativa.placeholder.PlaceholderContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +56,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     protected BottomNavigationView navigationView;
     protected AdapterMasterDetail mAdapter;
     SearchView searchView;
+
+    //para peticion
+    private RequestQueue requestQueue;
+    private RecyclerView mRecyclerView;
+
+    ArrayList<PlaceholderContent.PlaceholderItem> listaNoticias;
 
 
     @Override
@@ -163,7 +178,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+
+                    getNoticiasonSubmit(query);
+
+                return true;
 
             }
 
@@ -178,6 +196,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    protected abstract void getNoticiasonSubmit(String query);
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -239,5 +259,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             }
     }
+
 
 }
